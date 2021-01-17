@@ -1,0 +1,21 @@
+<resources>
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="delivery_note_details_header_margine">10dp</dimen>
+    <dimen name="delivery_note_history_table_margines">30dp</dimen>
+    <dimen name="input_texts_margin">15dp</dimen>
+    <dimen name="barcode_edit_image">2dp</dimen>
+    <dimen name="activity_vertical_margin">15dp</dimen>
+    <dimen name="activity_vertical_margin_fragment">15dp</dimen>
+    <dimen name="delivery_note_history_id_width">15dp</dimen>
+    <dimen name="delivery_note_history_date_width">90dp</dimen>
+    <dimen name="delivery_note_history_name_width">100dp</dimen>
+    <dimen name="delivery_note_history_port_name_width">100dp</dimen>
+    <dimen name="delivery_note_history_status_width">60dp</dimen>
+    <dimen name="delivery_note_history_scanning_date_width">100dp</dimen>
+    <dimen name="delivery_note_history_list_header">2dp</dimen>
+    <dimen name="delivery_note_history_date_panel_margine">10dp</dimen>
+
+    <dimen name="login_panel_margins">10dp</dimen>
+    <dimen name="login_welcome_messge">40dp</dimen>
+</resources>

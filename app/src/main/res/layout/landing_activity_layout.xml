@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center">
+        <ProgressBar
+            android:id="@+id/simpleProgressBar"
+            android:layout_width="match_parent"
+            android:indeterminateDrawable="@drawable/mentaprogress"
+            android:layout_height="wrap_content">
+        </ProgressBar>
+<com.google.android.material.textview.MaterialTextView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    style="@style/LandingErrorMessage"
+    android:text="@string/message_error_unknown_error"
+    android:id="@+id/landing_fragment_txt_error"
+    android:visibility="invisible">
+
+</com.google.android.material.textview.MaterialTextView>
+        <com.google.android.material.button.MaterialButton
+            android:layout_width="wrap_content"
+            android:id="@+id/landing_fragment_btn_retry"
+            android:layout_height="wrap_content"
+            android:text="@string/landing_fragem_btn_retry">
+        </com.google.android.material.button.MaterialButton>
+        <com.google.android.material.button.MaterialButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/landing_fragment_btn_go_to_login"
+            android:text="@string/landing_fragem_btn_go_to_login"
+            ></com.google.android.material.button.MaterialButton>
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

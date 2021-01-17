@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="red">#E81313</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="zoomenta_green">#abc338</color>
+    <color name="accent">#FFF50408</color>
+    <color name="gray">@android:color/darker_gray</color>
+    <color name="blue">#E3F2FD</color>
+    <color name="zoomenta_light_green">#E5ECC6</color>
+    <color name="lign_gray">#F5F4F4</color>
+    <color name="black">#000000</color>
+    <color name="transparent">#00000000</color>
+
+</resources>

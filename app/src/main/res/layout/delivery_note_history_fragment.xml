@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    tools:context=".UI.fragments.DeliveryNoteHistoryFragment">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_margin="@dimen/activity_horizontal_margin"
+
+        android:layout_height="match_parent">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_marginBottom="@dimen/delivery_note_history_date_panel_margine"
+        android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/delivery_note_history_header_from_date"
+                android:layout_alignParentStart="true"
+                android:id="@+id/lblFrom"
+                >
+
+            </TextView>
+
+            <EditText
+                android:id="@+id/dateFromDeliveryNoteHistory"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@+id/lblFrom"
+                android:layout_weight="1"
+                android:focusable="false"
+                android:hint="@string/delivery_note_history_header_from_date"
+                android:inputType="none"
+                android:textIsSelectable="true" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/lblTo"
+                android:layout_weight="1"
+                android:text="@string/delivery_note_history_header_to_date">
+
+            </TextView>
+            <EditText
+                android:id="@+id/dateToDeliveryNoteHistory"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="none"
+                android:textIsSelectable="true"
+                android:layout_weight="1"
+                android:layout_toEndOf="@+id/lblTo"
+                android:focusable="false"
+                android:hint="@string/delivery_note_history_header_to_date" />
+
+
+
+
+<!--        <com.google.android.material.button.MaterialButton-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:id="@+id/btnRefresh"-->
+<!--            android:layout_alignParentRight="true"-->
+
+<!--            android:text="@string/refresh">-->
+
+<!--        </com.google.android.material.button.MaterialButton>-->
+    </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:id="@+id/errorTextGroup"
+            android:visibility="gone"
+            android:layout_height="match_parent"
+            android:textAlignment="center">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/textinput_error"
+            android:layout_width="wrap_content"
+            android:text="@string/textinput_error"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:visibility="gone"
+            android:hint="error" />
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/txt_empty_delivery_notes_history"
+            android:text="@string/txt_empty_delivery_notes_history"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textAlignment="center"
+            android:textColor="@color/red"
+            android:visibility="gone"
+            android:hint="error" />
+    </LinearLayout>
+
+        <ProgressBar
+            android:id="@+id/simpleProgressBar"
+            android:layout_width="match_parent"
+            android:visibility="visible"
+            android:indeterminateDrawable="@drawable/mentaprogress"
+            android:layout_height="wrap_content">
+        </ProgressBar>
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/swipeContainer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:orientation="vertical"
+                android:id="@+id/tableContainer"
+                android:layout_height="match_parent">
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:id="@+id/header_group"
+                    android:background="@drawable/delivery_note_history_table_headers"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        style="@style/ListTableHeader"
+                        android:text="@string/listViewTxtDeliveryNoteName"
+                        >
+                    </TextView>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        style="@style/ListTableHeader"
+                        android:text="@string/listViewTxtDeliveryNoteScanningDate"
+                        >
+                    </TextView>
+                </LinearLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:id="@+id/list_delivery_notes_history"
+                    android:layout_width="match_parent"
+
+                    android:layout_height="wrap_content" />
+            </androidx.appcompat.widget.LinearLayoutCompat>
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

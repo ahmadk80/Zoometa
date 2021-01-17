@@ -1,0 +1,20 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Theme.Zoometa" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/zoomenta_green</item>
+        <item name="android:statusBarColor" tools:targetApi="l">@color/zoomenta_green</item>
+        <!-- Customize your theme here. -->
+    </style>
+
+    <style name="Theme.Zoometa.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.Zoometa.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.Zoometa.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+
+</resources>
