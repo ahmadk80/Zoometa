@@ -60,8 +60,7 @@ public class DeliveryNoteHistoryFragment extends BaseFragment {
         return c.getTime();
     }
     public static DeliveryNoteHistoryFragment newInstance(int page, String title) {
-        DeliveryNoteHistoryFragment fragmentFirst = new DeliveryNoteHistoryFragment();
-        return fragmentFirst;
+        return new DeliveryNoteHistoryFragment();
     }
     private void setDateFromText(EditText txtDate, Calendar calendar){
         int day = calendar.get(Calendar.DAY_OF_MONTH);
@@ -92,24 +91,21 @@ public class DeliveryNoteHistoryFragment extends BaseFragment {
         dateToDeliveryNoteHistory = view.findViewById(R.id.dateToDeliveryNoteHistory);
 
         resetDates();
-        dateFromDeliveryNoteHistory.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        dateFromDeliveryNoteHistory.setOnClickListener((View v) -> {
 
-                List<String> date = Arrays.asList(dateFromDeliveryNoteHistory.getText().toString().split("/"));
-                int year = Integer.parseInt(date.get(2));
-                int month = Integer.parseInt(date.get(0));
-                int day = Integer.parseInt(date.get(1));
-                picker = new DatePickerDialog(getActivity(),
-                        new DatePickerDialog.OnDateSetListener() {
-                            @Override
-                            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                                dateFromDeliveryNoteHistory.setText((monthOfYear + 1) + "/" + dayOfMonth + "/" + year);
-                                getMyScannedDeliveryNotes(false);
-                            }
-                        }, year, month - 1, day);
-                picker.show();
-            }
+            List<String> date = Arrays.asList(dateFromDeliveryNoteHistory.getText().toString().split("/"));
+            int year = Integer.parseInt(date.get(2));
+            int month = Integer.parseInt(date.get(0));
+            int day = Integer.parseInt(date.get(1));
+            picker = new DatePickerDialog(getActivity(),
+                    new DatePickerDialog.OnDateSetListener() {
+                        @Override
+                        public void onDateSet(DatePicker view1, int year, int monthOfYear, int dayOfMonth) {
+                            dateFromDeliveryNoteHistory.setText((monthOfYear + 1) + "/" + dayOfMonth + "/" + year);
+                            getMyScannedDeliveryNotes(false);
+                        }
+                    }, year, month - 1, day);
+            picker.show();
         });
         dateToDeliveryNoteHistory.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -119,12 +115,9 @@ public class DeliveryNoteHistoryFragment extends BaseFragment {
                 int month = Integer.parseInt(date.get(0));
                 int day = Integer.parseInt(date.get(1));
                 picker = new DatePickerDialog(getActivity(),
-                        new DatePickerDialog.OnDateSetListener() {
-                            @Override
-                            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                                dateToDeliveryNoteHistory.setText((monthOfYear + 1) + "/" + dayOfMonth + "/" + year);
-                                getMyScannedDeliveryNotes(false);
-                            }
+                        (DatePicker view12, int year1, int monthOfYear, int dayOfMonth) -> {
+                            dateToDeliveryNoteHistory.setText((monthOfYear + 1) + "/" + dayOfMonth + "/" + year1);
+                            getMyScannedDeliveryNotes(false);
                         }, year, month - 1, day);
                 picker.show();
             }

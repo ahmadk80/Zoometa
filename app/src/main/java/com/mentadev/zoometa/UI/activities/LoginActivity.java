@@ -1,5 +1,6 @@
 package com.mentadev.zoometa.UI.activities;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -48,12 +49,7 @@ public class LoginActivity extends Activity {
         login_activity_btn_login = findViewById(R.id.login_activity_btn_login);
         imageView = findViewById(R.id.imageView);
         login_activity_btn_login.setOnClickListener(Login);
-        login_activity_txt_username.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View view, boolean b) {
-                imageView.setVisibility(b? View.GONE : View.VISIBLE);
-            }
-        });
+        login_activity_txt_username.setOnFocusChangeListener((view, b) -> imageView.setVisibility(b? View.GONE : View.VISIBLE));
         login_activity_txt_username.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -77,16 +73,17 @@ public class LoginActivity extends Activity {
         finishAffinity();
     }
 
-    private View.OnClickListener Login = view -> Login();
+    private final View.OnClickListener Login = view -> Login();
 
 
+    @SuppressLint("HardwareIds")
     private void Login() {
         imageView.setVisibility(View.VISIBLE);
         toogleUserInteraction(true, false);
         LandingActivity.MyProfile = new MyProfile();
         LandingActivity.MyProfile.setDeviceId(Settings.Secure.getString(getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID));
         LandingActivity.MyProfile.setOtp(String.valueOf(login_activity_txt_username.getText()));
-        getSharedPreferences(String.valueOf(R.string.shared_preferences_otp), MODE_PRIVATE).edit().putString(String.valueOf(R.string.shared_preferences_otp), LandingActivity.MyProfile.getOtp()).commit();
+        getSharedPreferences(String.valueOf(R.string.shared_preferences_otp), MODE_PRIVATE).edit().putString(String.valueOf(R.string.shared_preferences_otp), LandingActivity.MyProfile.getOtp()).apply();
         LoginToZoomenta(getApplicationContext(), new Intent(getApplicationContext(), MainActivity.class));
     }
 

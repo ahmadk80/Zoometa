@@ -16,6 +16,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.mentadev.zoometa.R;
 import com.mentadev.zoometa.datamodel.DeliveryNoteDetails;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,9 +26,6 @@ public class DeliveryNoteDetailsAdapter extends RecyclerView.Adapter<DeliveryNot
     private List<DeliveryNoteDetails> deliveryNoteDetailsList;
     private List<DeliveryNoteDetails> deliveryNoteDetailsListFiltered;
     private Context context;
-
-
-
     public void setDeliveryNotesHistoryList(List<DeliveryNoteDetails> _deliveryNoteDetailsList) {
         if (this.deliveryNoteDetailsList == null) {
             deliveryNoteDetailsList = _deliveryNoteDetailsList;
@@ -46,17 +45,12 @@ public class DeliveryNoteDetailsAdapter extends RecyclerView.Adapter<DeliveryNot
 
                 @Override
                 public boolean areItemsTheSame(int oldItemPosition, int newItemPosition) {
-                    return DeliveryNoteDetailsAdapter.this.deliveryNoteDetailsList.get(oldItemPosition).getAccountNumber() == deliveryNoteDetailsList.get(newItemPosition).getAccountNumber();
+                    return DeliveryNoteDetailsAdapter.this.deliveryNoteDetailsList.get(oldItemPosition).getAccountNumber().equals(deliveryNoteDetailsList.get(newItemPosition).getAccountNumber());
                 }
 
                 @Override
                 public boolean areContentsTheSame(int oldItemPosition, int newItemPosition) {
-
-                    DeliveryNoteDetails newMovie = DeliveryNoteDetailsAdapter.this.deliveryNoteDetailsList.get(oldItemPosition);
-
-                    DeliveryNoteDetails oldMovie = deliveryNoteDetailsList.get(newItemPosition);
-
-                    return newMovie.getAccountNumber() == oldMovie.getAccountNumber();
+                    return DeliveryNoteDetailsAdapter.this.deliveryNoteDetailsList.get(oldItemPosition).getAccountNumber().equals(deliveryNoteDetailsList.get(newItemPosition).getAccountNumber());
                 }
             });
             deliveryNoteDetailsList = _deliveryNoteDetailsList;
@@ -64,62 +58,42 @@ public class DeliveryNoteDetailsAdapter extends RecyclerView.Adapter<DeliveryNot
             result.dispatchUpdatesTo(this);
         }
     }
-
     public Context getContext() {
         return context;
     }
-
     public void setContext(Context context) {
         this.context = context;
     }
-
-    /**
-     * Provide a reference to the type of views that you are using
-     * (custom ViewHolder).
-     */
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        //private final TextView listViewTxtDeliveryNoteId;
         private final TextView txtCardId;
         private final TextView txtAccountNumber;
         private final TextView txtName;
         private final TextView txtNameAr;
         private final LinearLayout list_delivery_notes_history_row;
-
         public ViewHolder(View view) {
             super(view);
-            //  listViewTxtDeliveryNoteId =  view.findViewById(R.id.listViewTxtDeliveryNoteId);
             list_delivery_notes_history_row = view.findViewById(R.id.list_delivery_notes_history_row);
             txtCardId = view.findViewById(R.id.listViewTxtCardId);
             txtAccountNumber = view.findViewById(R.id.listViewTxtAccountNumber);
             txtName = view.findViewById(R.id.listViewTxtNameEn);
             txtNameAr = view.findViewById(R.id.listViewTxtCardNameAr);
         }
-
         public TextView getTxtName() {
             return txtName;
         }
-//
-//        public TextView getListViewTxtDeliveryNoteId() {
-//            return listViewTxtDeliveryNoteId;
-//        }
-
         public TextView getTxtNameAr() {
             return txtNameAr;
         }
-
         public LinearLayout getList_delivery_notes_history_row() {
             return list_delivery_notes_history_row;
         }
-
         public TextView getTxtCardId() {
             return txtCardId;
         }
-
         public TextView getTxtAccountNumber() {
             return txtAccountNumber;
         }
     }
-
     @Override
     public Filter getFilter() {
         return new Filter() {
@@ -137,12 +111,10 @@ public class DeliveryNoteDetailsAdapter extends RecyclerView.Adapter<DeliveryNot
                     }
                     deliveryNoteDetailsListFiltered = filteredList;
                 }
-
                 FilterResults filterResults = new FilterResults();
                 filterResults.values = deliveryNoteDetailsListFiltered;
                 return filterResults;
             }
-
             @Override
             protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
                 deliveryNoteDetailsListFiltered = (ArrayList<DeliveryNoteDetails>) filterResults.values;
@@ -151,33 +123,20 @@ public class DeliveryNoteDetailsAdapter extends RecyclerView.Adapter<DeliveryNot
             }
         };
     }
-
-    /**
-     * Initialize the dataset of the Adapter.
-     *
-     * @param dataSet String[] containing the data to populate views to be used
-     *                by RecyclerView.
-     */
     public DeliveryNoteDetailsAdapter(List<DeliveryNoteDetails> dataSet, Context context) {
         setDeliveryNotesHistoryList(dataSet);
         setContext(context);
     }
-
-    // Create new views (invoked by the layout manager)
+    @NotNull
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
-        // Create a new view, which defines the UI of the list item
         View view = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.delivery_note_details_list_row, viewGroup, false);
 
         return new ViewHolder(view);
     }
-
-
-    // Replace the contents of a view (invoked by the layout manager)
     @Override
-    public void onBindViewHolder(ViewHolder viewHolder, final int position) {
-        //viewHolder.getListViewTxtDeliveryNoteId().setText(getDeliveryNotesHistoryList().get(position).getDeliveryNoteId());
+    public void onBindViewHolder(@NotNull ViewHolder viewHolder, final int position) {
         if (position % 2 == 1) {
             viewHolder.getList_delivery_notes_history_row().setBackground(ContextCompat.getDrawable(getContext(), R.drawable.delivery_note_history_table_borders_odd));
         } else {
@@ -190,8 +149,6 @@ public class DeliveryNoteDetailsAdapter extends RecyclerView.Adapter<DeliveryNot
         viewHolder.getTxtNameAr().setTextAlignment(View.TEXT_ALIGNMENT_TEXT_START);
         viewHolder.getTxtName().setTextAlignment(View.TEXT_ALIGNMENT_TEXT_START);
     }
-
-    // Return the size of your dataset (invoked by the layout manager)
     @Override
     public int getItemCount() {
         if (deliveryNoteDetailsListFiltered != null) {

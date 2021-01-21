@@ -22,12 +22,11 @@ public class UserProfileFragment extends BaseFragment {
     TextInputEditText user_properties_fragment_txt_fullname;
 
     public static UserProfileFragment newInstance(int page, String title) {
-        UserProfileFragment fragmentFirst = new UserProfileFragment();
-//        Bundle args = new Bundle();
+        //        Bundle args = new Bundle();
 //        args.putInt("someInt", page);
 //        args.putString("someTitle", title);
 //        fragmentFirst.setArguments(args);
-        return fragmentFirst;
+        return new UserProfileFragment();
     }
     @Override
     public View onCreateView(

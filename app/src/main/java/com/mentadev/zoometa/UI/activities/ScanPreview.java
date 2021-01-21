@@ -39,12 +39,9 @@ public class ScanPreview extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.barcode_preview_activity);
         initViews();
-        btnOpenCamera.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(ScanPreview.this, ScanActivity.class);
-                startActivity(intent);
-            }
+        btnOpenCamera.setOnClickListener(view -> {
+            Intent intent = new Intent(ScanPreview.this, ScanActivity.class);
+            startActivity(intent);
         });
         if (getIntent().getExtras() != null) {
             txtResultBody.setText(getIntent().getExtras().getString(BARCODE));
@@ -55,12 +52,7 @@ public class ScanPreview extends AppCompatActivity {
             btnSubmitScanned.setEnabled(false);
         }
         btnSubmitScanned.setVisibility(View.VISIBLE);
-        btnSubmitScanned.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                submitScanned();
-            }
-        });
+        btnSubmitScanned.setOnClickListener(view -> submitScanned());
         txtResultBody.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -69,11 +61,7 @@ public class ScanPreview extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if (charSequence.length() == 0) {
-                    btnSubmitScanned.setEnabled(false);
-                } else {
-                    btnSubmitScanned.setEnabled(true);
-                }
+                btnSubmitScanned.setEnabled(charSequence.length() != 0);
             }
 
             @Override
@@ -144,16 +132,13 @@ public class ScanPreview extends AppCompatActivity {
         btnSubmitScanned = findViewById(R.id.btnSubmitScanned);
         textinput_error = findViewById(R.id.textinput_error);
 
-        txtResultBody.setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View view, int i, KeyEvent keyEvent) {
-                if (keyEvent.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
-                    submitScanned();
-                    return true;
-                }
+        txtResultBody.setOnKeyListener((view, i, keyEvent) -> {
+            if (keyEvent.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
+                submitScanned();
                 return true;
-
             }
+            return true;
+
         });
     }
 }

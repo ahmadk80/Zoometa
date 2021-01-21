@@ -46,7 +46,6 @@ public class DeliveryNoteDetailsActivity extends AppCompatActivity {
     LinearLayout container_header_name;
     LinearLayout container_header_count;
     MaterialTextView txt_cards_count;
-    private String deliveryNoteName;
     private SearchView searchView;
     RecyclerView.AdapterDataObserver adapterDataObserver;
     @Override
@@ -78,7 +77,7 @@ public class DeliveryNoteDetailsActivity extends AppCompatActivity {
                 }
         );
         deliveryNoteId = getIntent().getStringExtra("ID");
-        deliveryNoteName = getIntent().getStringExtra("NAME");
+        String deliveryNoteName = getIntent().getStringExtra("NAME");
         deliveryNoteScannings = new ArrayList<>();
         deliveryNoteAdapter = new DeliveryNoteDetailsAdapter(deliveryNoteScannings, getApplicationContext());
         recyclerView.setAdapter(deliveryNoteAdapter);
@@ -134,7 +133,7 @@ public class DeliveryNoteDetailsActivity extends AppCompatActivity {
             @Override
             public void OnError(Throwable exception) {
                 errorTextGroup.setVisibility(View.VISIBLE);
-                ExceptionHandling.HandleUIDataEntryValidation(getApplication(), new Exception(R.string.message_error_get_delivery_note_history + " " + exception.getMessage()),
+                ExceptionHandling.HandleUIDataEntryValidation(getApplication(), new Exception(getResources().getString(R.string.message_error_get_delivery_note_history) + " " + exception.getMessage()),
                         textinput_error);
                 simpleProgressBar.setVisibility(View.GONE);
                 swipeContainer.setRefreshing(false);

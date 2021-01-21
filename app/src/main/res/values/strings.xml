@@ -20,12 +20,12 @@
     <string name="delivery_note_history_header_id">ID</string>
     <string name="delivery_note_history_header_date">Date</string>
     <string name="seperator">|</string>
-    <string name="message_error_get_delivery_note_history">Error getting Hisotry</string>
+    <string name="message_error_get_delivery_note_history">Error getting Delivery Note Details\n</string>
     <string name="txt_preview">Preview</string>
     <string name="submit">Submit</string>
     <string name="refresh">Refresh</string>
     <string name="txt_empty_delivery_notes_history">No Data Retreived</string>
-    <string name="textinput_error">Error Occured</string>
+    <string name="textinput_error">Error Occurred</string>
     <string name="listViewTxtDeliveryNoteName">Delivery Name</string>
     <string name="listViewTxtDeliveryNotePortName">Port Name</string>
     <string name="listViewTxtDeliveryNoteStatus">Status</string>
@@ -41,7 +41,7 @@
     <string name="errorText_noBarcodeScanned">No value Scanned, please scan a barcode</string>
     <string name="message_error_resource_not_found">Resource Not Found</string>
     <string name="message_error_internal_server_error">Internal Server Error</string>
-    <string name="message_error_unknown_error">Unknown Error Occured</string>
+    <string name="message_error_unknown_error">Unknown Error Occurred</string>
     <string name="delivery_note_history_header_from_date">From:</string>
     <string name="delivery_note_history_header_to_date">To:</string>
     <string name="delivery_note_history_fragment_title">Home</string>
@@ -60,9 +60,6 @@
     <string name="second_fragment_label">Second Fragment</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
-
-    <string name="hello_first_fragment">Hello first fragment</string>
-    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="search">Search</string>
     <string name="accountNumber">Account No</string>
     <string name="name">Name</string>
@@ -72,4 +69,5 @@
     <string name="txt_cards_count">Quantity</string>
     <string name="back">Back</string>
     <string name="delivery_note_details_activity_header">Delivery Note</string>
+    <string name="message_error_connection_failure">Zoomenta is facing connection error, please try again later.\nSorry for the inconvenience</string>
 </resources>

@@ -20,6 +20,8 @@ import com.mentadev.zoometa.UI.activities.MainActivity;
 import com.mentadev.zoometa.datamodel.DeliveryNoteDetails;
 import com.mentadev.zoometa.datamodel.DeliveryNoteScanning;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -59,14 +61,11 @@ public class DeliveryNoteAdapter extends RecyclerView.Adapter<DeliveryNoteAdapte
             listViewTxtDeliveryNoteName =  view.findViewById(R.id.listViewTxtDeliveryNoteName);
             listViewTxtDeliveryNoteScanningDate =  view.findViewById(R.id.listViewTxtDeliveryNoteScanningDate);
             list_delivery_notes_history_row = view.findViewById(R.id.list_delivery_notes_history_row);
-            view.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent intent = new Intent(context, DeliveryNoteDetailsActivity.class);
-                    intent.putExtra("ID", getListViewTxtDeliveryNoteName().getTag().toString());
-                    intent.putExtra("NAME", getListViewTxtDeliveryNoteName().getText().toString());
-                    context.startActivity(intent);
-                }
+            view.setOnClickListener(view1 -> {
+                Intent intent = new Intent(context, DeliveryNoteDetailsActivity.class);
+                intent.putExtra("ID", getListViewTxtDeliveryNoteName().getTag().toString());
+                intent.putExtra("NAME", getListViewTxtDeliveryNoteName().getText().toString());
+                context.startActivity(intent);
             });
         }
 
@@ -100,6 +99,7 @@ public class DeliveryNoteAdapter extends RecyclerView.Adapter<DeliveryNoteAdapte
     }
 
     // Create new views (invoked by the layout manager)
+    @NotNull
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
         // Create a new view, which defines the UI of the list item
@@ -113,11 +113,8 @@ public class DeliveryNoteAdapter extends RecyclerView.Adapter<DeliveryNoteAdapte
     // Replace the contents of a view (invoked by the layout manager)
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, final int position) {
-        viewHolder.getListViewTxtDeliveryNoteName().setPaintFlags(Paint.UNDERLINE_TEXT_FLAG);
-        viewHolder.getListViewTxtDeliveryNoteScanningDate().setPaintFlags(Paint.UNDERLINE_TEXT_FLAG);
         viewHolder.getListViewTxtDeliveryNoteName().setText(getDeliveryNotesHistoryList().get(position).getName());
         viewHolder.getListViewTxtDeliveryNoteName().setTag(getDeliveryNotesHistoryList().get(position).getDeliveryNoteId());
-        //viewHolder.getListViewTxtDeliveryNoteId().setText(getDeliveryNotesHistoryList().get(position).getDeliveryNoteId());
         if(position %2 == 1)
         {
             viewHolder.getList_delivery_notes_history_row().setBackground(ContextCompat.getDrawable(getContext(), R.drawable.delivery_note_history_table_borders_odd));

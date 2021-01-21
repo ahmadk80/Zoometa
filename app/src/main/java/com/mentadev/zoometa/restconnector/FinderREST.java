@@ -11,9 +11,10 @@ import com.mentadev.zoometa.datamodel.DeliveryNoteScanRequest;
 import com.mentadev.zoometa.datamodel.DeliveryNoteScanning;
 import com.mentadev.zoometa.datamodel.MyProfile;
 import com.mentadev.zoometa.datamodel.ScanningHistoryRequest;
-import com.mentadev.zoometa.datamodel.ScanningResponse;
 import com.mentadev.zoometa.exceptionhandling.ExceptionHandling;
 
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -27,17 +28,15 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class FinderREST {
-    private static String BASE_URL;
     MyProfile myMyProfile;
-    List<MyProfile> allMyProfiles;
-    Context myContext;
+    private Context myContext;
     public static Retrofit retrofit;
 
     public FinderREST(Context context, String token) {
 
 
         this.myContext = context;
-        BASE_URL = myContext.getResources().getString(R.string.settings_url_rest_api);
+        String BASE_URL = myContext.getResources().getString(R.string.settings_url_rest_api);
         Gson gson = new GsonBuilder()
                 .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
                 .setLenient()
@@ -65,22 +64,19 @@ public class FinderREST {
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         NetworkConnectionInterceptor interceptor1 = new NetworkConnectionInterceptor(context);
-
-        if (token == "") {
-
-            OkHttpClient okHttpClient = new OkHttpClient.Builder()
+        OkHttpClient okHttpClient;
+        if (token.equals("")) {
+            okHttpClient = new OkHttpClient.Builder()
                     .addInterceptor(interceptor)
                     .addInterceptor(interceptor1)
                     .connectTimeout(10, TimeUnit.SECONDS)
                     .readTimeout(30, TimeUnit.SECONDS)
-                    .writeTimeout(15, TimeUnit.SECONDS)
+                    .writeTimeout(20, TimeUnit.SECONDS)
                     .build();
-            return okHttpClient;
         } else {
-
             TokenInterceptor tokenInterceptor = new TokenInterceptor();
             tokenInterceptor.token = token;
-            OkHttpClient okHttpClient =
+            okHttpClient =
                     new OkHttpClient.Builder()
                             .addInterceptor(tokenInterceptor)
                             .addInterceptor(interceptor)
@@ -91,15 +87,15 @@ public class FinderREST {
                             .writeTimeout(15, TimeUnit.SECONDS)
                             .build();
 
-            return okHttpClient;
         }
+        return okHttpClient;
     }
 
     public void validateOTP(MyProfile myProfile, final MyProfileInterface.ValidateOTP callBackInterface) {
         myProfile.setDeviceId("0");
         retrofit.create(MyProfileInterface.class).validateOTP(myProfile).enqueue(new Callback<ResponseEnvelop<MyProfile>>() {
             @Override
-            public void onResponse(Call<ResponseEnvelop<MyProfile>> call, Response<ResponseEnvelop<MyProfile>> response) {
+            public void onResponse(@NotNull Call<ResponseEnvelop<MyProfile>> call, @NotNull Response<ResponseEnvelop<MyProfile>> response) {
                 if (response.isSuccessful()) {
                     Gson gson = new Gson();
                     myMyProfile = new Gson().fromJson(gson.toJsonTree(response.body().getData()).getAsJsonObject(), MyProfile.class);
@@ -110,8 +106,9 @@ public class FinderREST {
             }
 
             @Override
-            public void onFailure(Call<ResponseEnvelop<MyProfile>> call, Throwable t) {
-                ExceptionHandling.HandleRetrofitFailure(t, callBackInterface);
+            public void onFailure(@NotNull Call<ResponseEnvelop<MyProfile>> call, @NotNull Throwable t) {
+
+                ExceptionHandling.HandleRetrofitFailure(t, callBackInterface, call, myContext);
             }
 
         });
@@ -122,7 +119,7 @@ public class FinderREST {
 
         retrofit.create(MyProfileInterface.class).sendScannedValue(code).enqueue(new Callback<ResponseEnvelop<Object>>() {
             @Override
-            public void onResponse(Call<ResponseEnvelop<Object>> call, Response<ResponseEnvelop<Object>> response) {
+            public void onResponse(@NotNull Call<ResponseEnvelop<Object>> call, @NotNull Response<ResponseEnvelop<Object>> response) {
                 if (response.isSuccessful()) {
                     callBackInterface.SendScannedValue(response.body().getMessage());
                 } else {
@@ -131,8 +128,8 @@ public class FinderREST {
             }
 
             @Override
-            public void onFailure(Call<ResponseEnvelop<Object>> call, Throwable t) {
-                ExceptionHandling.HandleRetrofitFailure(t, callBackInterface);
+            public void onFailure(@NotNull Call<ResponseEnvelop<Object>> call, @NotNull Throwable t) {
+                ExceptionHandling.HandleRetrofitFailure(t, callBackInterface, call, myContext);
             }
         });
     }
@@ -143,7 +140,7 @@ public class FinderREST {
         scanningHistoryRequest.setTo(toDate);
         retrofit.create(MyProfileInterface.class).getScanningHistory(scanningHistoryRequest).enqueue(new Callback<ResponseEnvelop<List<DeliveryNoteScanning>>>() {
             @Override
-            public void onResponse(Call<ResponseEnvelop<List<DeliveryNoteScanning>>> call, Response<ResponseEnvelop<List<DeliveryNoteScanning>>> response) {
+            public void onResponse(@NotNull Call<ResponseEnvelop<List<DeliveryNoteScanning>>> call, @NotNull Response<ResponseEnvelop<List<DeliveryNoteScanning>>> response) {
                 if (response.isSuccessful()) {
                     callBackInterface.getScanningHistory(response.body().getData());
                 } else {
@@ -152,8 +149,8 @@ public class FinderREST {
             }
 
             @Override
-            public void onFailure(Call<ResponseEnvelop<List<DeliveryNoteScanning>>> call, Throwable t) {
-                ExceptionHandling.HandleRetrofitFailure(t, callBackInterface);
+            public void onFailure(@NotNull Call<ResponseEnvelop<List<DeliveryNoteScanning>>> call, @NotNull Throwable t) {
+                ExceptionHandling.HandleRetrofitFailure(t, callBackInterface, call, myContext);
             }
         });
     }
@@ -164,7 +161,7 @@ public class FinderREST {
         deliveryDetailsRequest.setDeliveryNoteId(deliveryNoteId);
         retrofit.create(MyProfileInterface.class).getDeliveryNoteDetails(deliveryDetailsRequest).enqueue(new Callback<ResponseEnvelop<List<DeliveryNoteDetails>>>() {
             @Override
-            public void onResponse(Call<ResponseEnvelop<List<DeliveryNoteDetails>>> call, Response<ResponseEnvelop<List<DeliveryNoteDetails>>> response) {
+            public void onResponse(@NotNull Call<ResponseEnvelop<List<DeliveryNoteDetails>>> call, @NotNull Response<ResponseEnvelop<List<DeliveryNoteDetails>>> response) {
                 if (response.isSuccessful()) {
                     callBackInterface.getDeliverNoteDetailsInterface(response.body().getData());
                 } else {
@@ -173,8 +170,8 @@ public class FinderREST {
             }
 
             @Override
-            public void onFailure(Call<ResponseEnvelop<List<DeliveryNoteDetails>>> call, Throwable t) {
-                ExceptionHandling.HandleRetrofitFailure(t, callBackInterface);
+            public void onFailure(@NotNull Call<ResponseEnvelop<List<DeliveryNoteDetails>>> call, @NotNull Throwable t) {
+                ExceptionHandling.HandleRetrofitFailure(t, callBackInterface, call, myContext);
             }
         });
     }

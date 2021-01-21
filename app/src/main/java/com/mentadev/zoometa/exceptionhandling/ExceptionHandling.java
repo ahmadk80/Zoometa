@@ -6,19 +6,13 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.google.android.material.textview.MaterialTextView;
-import com.mentadev.zoometa.UI.activities.MainActivity;
-import com.mentadev.zoometa.restconnector.FinderREST;
+import com.mentadev.zoometa.R;
 import com.mentadev.zoometa.restconnector.MyProfileInterface;
-import com.mentadev.zoometa.restconnector.NoConnectivityException;
-import com.mentadev.zoometa.restconnector.ResponseEnvelop;
 
 import java.io.IOException;
-import java.lang.annotation.Annotation;
+import java.net.SocketTimeoutException;
 
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.ResponseBody;
-import retrofit2.Converter;
+import retrofit2.Call;
 import retrofit2.Response;
 
 public class ExceptionHandling {
@@ -28,9 +22,26 @@ public class ExceptionHandling {
         Log.d("FINDMEA_ERROR", logMsg);
     }
 
-    public static void HandleRetrofitFailure(Throwable t, MyProfileInterface.MainInterface callBackInterface) {
-        t.printStackTrace();
-        callBackInterface.OnError(t);
+    public static void HandleRetrofitFailure(Throwable t, MyProfileInterface.MainInterface callBackInterface, Call<?> call, Context myContext) {
+
+
+        if (t instanceof SocketTimeoutException) {
+            t = new Throwable(myContext.getResources().getString(R.string.message_error_connection_failure));
+            t.printStackTrace();
+            callBackInterface.OnError(t);
+        } else if (t instanceof IOException) {
+            t = new Throwable(myContext.getResources().getString(R.string.message_error_connection_failure));
+            t.printStackTrace();
+            callBackInterface.OnError(t);
+        } else {
+            //Call was cancelled by user
+            if (call.isCanceled()) {
+                System.out.println("Call was cancelled forcefully");
+            } else {
+                t.printStackTrace();
+                callBackInterface.OnError(t);
+            }
+        }
     }
 
     public static void HandleUIDataEntryValidation(Context context, String displayMessage, String logMessage, MaterialTextView materialTextView) {
@@ -48,7 +59,7 @@ public class ExceptionHandling {
     }
 
 
-    public static void HandleRetrofitReturnError(Response response, MyProfileInterface.MainInterface callBackInterface) {
+    public static void HandleRetrofitReturnError(Response<?> response, MyProfileInterface.MainInterface callBackInterface) {
         switch (response.code()) {
             case 401:
                 callBackInterface.OnUnauthorized();

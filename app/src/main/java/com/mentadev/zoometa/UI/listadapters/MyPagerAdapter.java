@@ -10,6 +10,8 @@ import com.mentadev.zoometa.R;
 import com.mentadev.zoometa.UI.fragments.DeliveryNoteHistoryFragment;
 import com.mentadev.zoometa.UI.fragments.UserProfileFragment;
 
+import org.jetbrains.annotations.NotNull;
+
 public class MyPagerAdapter extends FragmentPagerAdapter {
     private static int NUM_ITEMS = 2;
     private int CurrentItem = 0;
@@ -27,26 +29,26 @@ public class MyPagerAdapter extends FragmentPagerAdapter {
     }
 
     // Returns the fragment to display for that page
+    @NotNull
     @Override
     public Fragment getItem(int position) {
         setCurrentItem(position);
         switch (position) {
-            case 0: // Fragment # 0 - This will show FirstFragment
+            case 0:
                 return DeliveryNoteHistoryFragment.newInstance(0, "Page # 1");
-            case 1: // Fragment # 0 - This will show FirstFragment different title
+            case 1:
                 return UserProfileFragment.newInstance(0, "Page # 1");
             default:
                 return null;
         }
     }
 
-    // Returns the page title for the top indicator
     @Override
     public CharSequence getPageTitle(int position) {
         switch (position){
-            case 0: // Fragment # 0 - This will show FirstFragment
+            case 0:
                 return context.getResources().getString(R.string.delivery_note_history_fragment_title);
-            case 1: // Fragment # 0 - This will show FirstFragment different title
+            case 1:
                 return context.getResources().getString(R.string.user_profile_fragment_title);
             default:
                 return null;
