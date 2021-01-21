@@ -6,9 +6,11 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
@@ -26,24 +28,44 @@ public class ScanPreview extends AppCompatActivity {
     MaterialTextView textinput_error;
     public static TextInputEditText txtResultBody;
     public static ProgressBar simpleProgressBar;
+    public static FrameLayout progressBarHolder;
 
     @Override
     public void onBackPressed() {
 
         Intent intent = new Intent(ScanPreview.this, MainActivity.class);
         startActivity(intent);
+        super.onBackPressed();
     }
-
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
+//    @Override
+//    public void onBackPressed() {
+//        if (!searchView.isIconified()) {
+//            searchView.setIconified(true);
+//            return;
+//        }
+//        super.onBackPressed();
+//    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.barcode_preview_activity);
+
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
         initViews();
         btnOpenCamera.setOnClickListener(view -> {
             Intent intent = new Intent(ScanPreview.this, ScanActivity.class);
             startActivity(intent);
         });
-        if (getIntent().getExtras() != null) {
+        if (getIntent().getExtras() != null && !getIntent().getExtras().getString(BARCODE).equals("")) {
             txtResultBody.setText(getIntent().getExtras().getString(BARCODE));
             getIntent().removeExtra(BARCODE);
             btnSubmitScanned.setEnabled(true);
@@ -51,7 +73,7 @@ public class ScanPreview extends AppCompatActivity {
             txtResultBody.setText("");
             btnSubmitScanned.setEnabled(false);
         }
-        btnSubmitScanned.setVisibility(View.VISIBLE);
+
         btnSubmitScanned.setOnClickListener(view -> submitScanned());
         txtResultBody.addTextChangedListener(new TextWatcher() {
             @Override
@@ -74,10 +96,12 @@ public class ScanPreview extends AppCompatActivity {
 
     private void submitScanned() {
         simpleProgressBar.setVisibility(View.VISIBLE);
+        progressBarHolder.setVisibility(View.VISIBLE);
         if (txtResultBody.getText().toString().isEmpty()) {
             textinput_error.setVisibility(View.VISIBLE);
             textinput_error.setText(getResources().getString(R.string.errorText_noBarcodeScanned));
             simpleProgressBar.setVisibility(View.GONE);
+            progressBarHolder.setVisibility(View.GONE);
             return;
         }
         FinderREST controller = new FinderREST(getApplicationContext(), LandingActivity.MyProfile.getToken());
@@ -89,6 +113,7 @@ public class ScanPreview extends AppCompatActivity {
                 textinput_error.setVisibility(View.VISIBLE);
                 textinput_error.setText(scanningResponseMessage);
                 simpleProgressBar.setVisibility(View.GONE);
+                progressBarHolder.setVisibility(View.GONE);
             }
 
             @Override
@@ -97,6 +122,7 @@ public class ScanPreview extends AppCompatActivity {
                         new Exception(getApplicationContext().getResources().getString(R.string.message_error_submit_scanning) + ".\n " + exception.getMessage()),
                         textinput_error);
                 simpleProgressBar.setVisibility(View.GONE);
+                progressBarHolder.setVisibility(View.GONE);
             }
 
             @Override
@@ -127,6 +153,7 @@ public class ScanPreview extends AppCompatActivity {
 
     private void initViews() {
         simpleProgressBar = findViewById(R.id.simpleProgressBar);
+        progressBarHolder = findViewById(R.id.progressBarHolder);
         txtResultBody = findViewById(R.id.txtResultsBody);
         btnOpenCamera = findViewById(R.id.btnOpenCamera);
         btnSubmitScanned = findViewById(R.id.btnSubmitScanned);

@@ -48,7 +48,7 @@
     <string name="user_profile_fragment_title">Profile</string>
     <string name="login_welcome_message">Welcome to Zoomenta\n Please enter the code provided by your company administrator</string>
     <string name="close">X</string>
-    <string name="txtScanPreviewHeader">Scan Result\n If the barcode was not scanned you can type the delivery note number manually below, then submit.</string>
+    <string name="txtScanPreviewHeader"><b>Scan Result</b>\n If the barcode was not scanned you can type the delivery note number manually below, then submit.</string>
     <string name="barcode_value">Barcode Value</string>
     <string name="enter_barcode_manually">Enter Barcode Manually</string>
     <string name="edit">Edit</string>
