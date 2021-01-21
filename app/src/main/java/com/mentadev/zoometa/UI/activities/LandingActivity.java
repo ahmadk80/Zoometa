@@ -31,7 +31,7 @@ public class LandingActivity extends AppCompatActivity {
     Activity activity;
 
     public static void Logout(Activity activity) {
-        MyProfile.DeleteFromSharedPreferences(activity);
+        com.mentadev.zoometa.datamodel.MyProfile.DeleteFromSharedPreferences(activity);
         Intent activityIntent = new Intent(activity, LandingActivity.class);
         activity.startActivity(activityIntent);
     }
@@ -85,7 +85,7 @@ public class LandingActivity extends AppCompatActivity {
     public void ReloadActivity() {
 
         FinderREST controller = new FinderREST(getApplicationContext(), "");
-        MyProfile = MyProfile.GetFromSharedPreferences(this);
+        MyProfile = com.mentadev.zoometa.datamodel.MyProfile.GetFromSharedPreferences(this);
         if (MyProfile != null) {
             MyProfile.setOtp(getApplicationContext().getSharedPreferences(String.valueOf(R.string.shared_preferences_otp), MODE_PRIVATE)
                     .getString(String.valueOf(R.string.shared_preferences_otp), null));

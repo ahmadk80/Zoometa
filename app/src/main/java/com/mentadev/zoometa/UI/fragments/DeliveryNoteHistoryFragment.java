@@ -59,7 +59,7 @@ public class DeliveryNoteHistoryFragment extends BaseFragment {
         c.set(year, month - 1, day,0,0);
         return c.getTime();
     }
-    public static DeliveryNoteHistoryFragment newInstance(int page, String title) {
+    public static DeliveryNoteHistoryFragment newInstance() {
         return new DeliveryNoteHistoryFragment();
     }
     private void setDateFromText(EditText txtDate, Calendar calendar){

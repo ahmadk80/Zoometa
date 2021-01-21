@@ -13,7 +13,7 @@ import com.mentadev.zoometa.UI.fragments.UserProfileFragment;
 import org.jetbrains.annotations.NotNull;
 
 public class MyPagerAdapter extends FragmentPagerAdapter {
-    private static int NUM_ITEMS = 2;
+    private static final int NUM_ITEMS = 2;
     private int CurrentItem = 0;
 
     public Context context;
@@ -21,28 +21,23 @@ public class MyPagerAdapter extends FragmentPagerAdapter {
         super(fragmentManager);
         context = _context;
     }
-
-    // Returns total number of pages
     @Override
     public int getCount() {
         return NUM_ITEMS;
     }
-
-    // Returns the fragment to display for that page
     @NotNull
     @Override
     public Fragment getItem(int position) {
         setCurrentItem(position);
         switch (position) {
             case 0:
-                return DeliveryNoteHistoryFragment.newInstance(0, "Page # 1");
+                return DeliveryNoteHistoryFragment.newInstance();
             case 1:
-                return UserProfileFragment.newInstance(0, "Page # 1");
+                return UserProfileFragment.newInstance();
             default:
                 return null;
         }
     }
-
     @Override
     public CharSequence getPageTitle(int position) {
         switch (position){
@@ -54,11 +49,9 @@ public class MyPagerAdapter extends FragmentPagerAdapter {
                 return null;
         }
     }
-
     public int getCurrentItem() {
         return CurrentItem;
     }
-
     public void setCurrentItem(int currentItem) {
         CurrentItem = currentItem;
     }

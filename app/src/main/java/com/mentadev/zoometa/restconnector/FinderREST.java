@@ -29,7 +29,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class FinderREST {
     MyProfile myMyProfile;
-    private Context myContext;
+    private final Context myContext;
     public static Retrofit retrofit;
 
     public FinderREST(Context context, String token) {
@@ -65,15 +65,7 @@ public class FinderREST {
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         NetworkConnectionInterceptor interceptor1 = new NetworkConnectionInterceptor(context);
         OkHttpClient okHttpClient;
-        if (token.equals("")) {
-            okHttpClient = new OkHttpClient.Builder()
-                    .addInterceptor(interceptor)
-                    .addInterceptor(interceptor1)
-                    .connectTimeout(10, TimeUnit.SECONDS)
-                    .readTimeout(30, TimeUnit.SECONDS)
-                    .writeTimeout(20, TimeUnit.SECONDS)
-                    .build();
-        } else {
+        if (!token.equals("")) {
             TokenInterceptor tokenInterceptor = new TokenInterceptor();
             tokenInterceptor.token = token;
             okHttpClient =
@@ -87,6 +79,14 @@ public class FinderREST {
                             .writeTimeout(15, TimeUnit.SECONDS)
                             .build();
 
+        } else {
+            okHttpClient = new OkHttpClient.Builder()
+                    .addInterceptor(interceptor)
+                    .addInterceptor(interceptor1)
+                    .connectTimeout(10, TimeUnit.SECONDS)
+                    .readTimeout(30, TimeUnit.SECONDS)
+                    .writeTimeout(20, TimeUnit.SECONDS)
+                    .build();
         }
         return okHttpClient;
     }
