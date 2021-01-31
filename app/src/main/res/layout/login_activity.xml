@@ -44,7 +44,7 @@
             android:id="@+id/login_activity_txt_username"
             android:drawableTint="@color/accent"
             android:hint="OTP"
-            android:text="a"
+            android:text=""
             android:maxLength="20"
             android:singleLine="true" />
 

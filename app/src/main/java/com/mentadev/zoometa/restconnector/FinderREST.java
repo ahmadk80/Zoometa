@@ -92,14 +92,18 @@ public class FinderREST {
     }
 
     public void validateOTP(MyProfile myProfile, final MyProfileInterface.ValidateOTP callBackInterface) {
-        myProfile.setDeviceId("0");
+//        myProfile.setDeviceId("0");
         retrofit.create(MyProfileInterface.class).validateOTP(myProfile).enqueue(new Callback<ResponseEnvelop<MyProfile>>() {
             @Override
             public void onResponse(@NotNull Call<ResponseEnvelop<MyProfile>> call, @NotNull Response<ResponseEnvelop<MyProfile>> response) {
                 if (response.isSuccessful()) {
-                    Gson gson = new Gson();
-                    myMyProfile = new Gson().fromJson(gson.toJsonTree(response.body().getData()).getAsJsonObject(), MyProfile.class);
-                    callBackInterface.validateOTP(myMyProfile);
+                    if(response.body().getData() != null) {
+                        Gson gson = new Gson();
+                        myMyProfile = new Gson().fromJson(gson.toJsonTree(response.body().getData()).getAsJsonObject(), MyProfile.class);
+                        callBackInterface.validateOTP(myMyProfile);
+                    }else {
+                        callBackInterface.OnError(new Throwable(response.body().getMessage()));
+                    }
                 } else {
                     ExceptionHandling.HandleRetrofitReturnError(response, callBackInterface);
                 }
@@ -107,7 +111,6 @@ public class FinderREST {
 
             @Override
             public void onFailure(@NotNull Call<ResponseEnvelop<MyProfile>> call, @NotNull Throwable t) {
-
                 ExceptionHandling.HandleRetrofitFailure(t, callBackInterface, call, myContext);
             }
 

@@ -2,7 +2,7 @@
     <string name="app_name">Zoomenta</string>
     <string name="action_logout">Log Out</string>
     <string name="shared_preferences_login_object">MyProfile</string>
-    <string name="settings_url_rest_api">http://93.187.35.11:4433/api/MobileAPI/</string>
+    <string name="settings_url_rest_api">https://172.17.0.33:5555/api/MobileAPI/</string>
     <string name="message_error_get_user_info">Error getting user information\n</string>
     <string name="message_signing_in">Signing You In</string>
     <string name="landing_fragem_btn_retry">Retry</string>

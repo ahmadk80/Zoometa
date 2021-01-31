@@ -12,6 +12,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -75,9 +76,16 @@ public class LoginActivity extends Activity {
 
     private final View.OnClickListener Login = view -> Login();
 
-
+    public static void hideSoftKeyboard(Activity activity) {
+        InputMethodManager inputMethodManager =
+                (InputMethodManager) activity.getSystemService(
+                        Activity.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(
+                activity.getCurrentFocus().getWindowToken(), 0);
+    }
     @SuppressLint("HardwareIds")
     private void Login() {
+        hideSoftKeyboard(this);
         imageView.setVisibility(View.VISIBLE);
         toogleUserInteraction(true, false);
         LandingActivity.MyProfile = new MyProfile();
