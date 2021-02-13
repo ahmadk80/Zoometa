@@ -51,6 +51,7 @@ public class LoginActivity extends Activity {
         imageView = findViewById(R.id.imageView);
         login_activity_btn_login.setOnClickListener(Login);
         login_activity_txt_username.setOnFocusChangeListener((view, b) -> imageView.setVisibility(b? View.GONE : View.VISIBLE));
+        login_activity_btn_login.setEnabled(false);
         login_activity_txt_username.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -60,6 +61,12 @@ public class LoginActivity extends Activity {
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 imageView.setVisibility(View.GONE);
+
+                if(charSequence.toString().trim().length()==0){
+                    login_activity_btn_login.setEnabled(false);
+                } else {
+                    login_activity_btn_login.setEnabled(true);
+                }
             }
 
             @Override
@@ -80,19 +87,24 @@ public class LoginActivity extends Activity {
         InputMethodManager inputMethodManager =
                 (InputMethodManager) activity.getSystemService(
                         Activity.INPUT_METHOD_SERVICE);
-        inputMethodManager.hideSoftInputFromWindow(
-                activity.getCurrentFocus().getWindowToken(), 0);
+        if (inputMethodManager != null) {
+            inputMethodManager.hideSoftInputFromWindow(
+                    activity.getCurrentFocus().getWindowToken(), 0);
+        }
     }
     @SuppressLint("HardwareIds")
     private void Login() {
-        hideSoftKeyboard(this);
-        imageView.setVisibility(View.VISIBLE);
-        toogleUserInteraction(true, false);
-        LandingActivity.MyProfile = new MyProfile();
-        LandingActivity.MyProfile.setDeviceId(Settings.Secure.getString(getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID));
-        LandingActivity.MyProfile.setOtp(String.valueOf(login_activity_txt_username.getText()));
-        getSharedPreferences(String.valueOf(R.string.shared_preferences_otp), MODE_PRIVATE).edit().putString(String.valueOf(R.string.shared_preferences_otp), LandingActivity.MyProfile.getOtp()).apply();
-        LoginToZoomenta(getApplicationContext(), new Intent(getApplicationContext(), MainActivity.class));
+        if (login_activity_txt_username.getText().toString().trim() != "") {
+
+            hideSoftKeyboard(this);
+            imageView.setVisibility(View.VISIBLE);
+            toogleUserInteraction(true, false);
+            LandingActivity.MyProfile = new MyProfile();
+            LandingActivity.MyProfile.setDeviceId(Settings.Secure.getString(getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID));
+            LandingActivity.MyProfile.setOtp(String.valueOf(login_activity_txt_username.getText()));
+            getSharedPreferences(String.valueOf(R.string.shared_preferences_otp), MODE_PRIVATE).edit().putString(String.valueOf(R.string.shared_preferences_otp), LandingActivity.MyProfile.getOtp()).apply();
+            LoginToZoomenta(getApplicationContext(), new Intent(getApplicationContext(), MainActivity.class));
+        }
     }
 
     public static void toogleUserInteraction(boolean disabled, boolean errorMode) {
