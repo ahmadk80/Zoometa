@@ -90,6 +90,7 @@
             android:layout_height="wrap_content"
             android:textAlignment="center"
             android:visibility="gone"
+            style="@style/LandingErrorMessage"
             android:hint="error" />
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/txt_empty_delivery_notes_history"

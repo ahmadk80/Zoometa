@@ -152,29 +152,33 @@ public class DeliveryNoteHistoryFragment extends BaseFragment {
                 String.valueOf(dateToDeliveryNoteHistory.getText()), new MyProfileInterface.ScanningHistoryInterface() {
                     @Override
                     public void getScanningHistory(List<DeliveryNoteScanning> deliveryNoteScannings) {
-                        if (!deliveryNoteScannings.isEmpty()) {
+                        if(deliveryNoteScannings == null){
+                           OnError(new Throwable(getString(R.string.message_error_internal_server_error)));
+                        }else {
+                            if (!deliveryNoteScannings.isEmpty()) {
 
-                            tableContainer.setVisibility(View.VISIBLE);
-                            txt_empty_delivery_notes_history.setVisibility(View.GONE);
-                            errorTextGroup.setVisibility(View.GONE);
+                                tableContainer.setVisibility(View.VISIBLE);
+                                txt_empty_delivery_notes_history.setVisibility(View.GONE);
+                                errorTextGroup.setVisibility(View.GONE);
 
-                        } else {
-                            tableContainer.setVisibility(View.GONE);
-                            errorTextGroup.setVisibility(View.VISIBLE);
-                            txt_empty_delivery_notes_history.setVisibility(View.VISIBLE);
+                            } else {
+                                tableContainer.setVisibility(View.GONE);
+                                errorTextGroup.setVisibility(View.VISIBLE);
+                                txt_empty_delivery_notes_history.setVisibility(View.VISIBLE);
+                            }
+                            textinput_error.setVisibility(View.GONE);
+                            deliveryNoteAdapter.setDeliveryNotesHistoryList(deliveryNoteScannings);
+                            deliveryNoteAdapter.notifyDataSetChanged();
+                            simpleProgressBar.setVisibility(View.GONE);
+                            swipeContainer.setRefreshing(false);
                         }
-
-                        textinput_error.setVisibility(View.GONE);
-                        deliveryNoteAdapter.setDeliveryNotesHistoryList(deliveryNoteScannings);
-                        deliveryNoteAdapter.notifyDataSetChanged();
-                        simpleProgressBar.setVisibility(View.GONE);
-                        swipeContainer.setRefreshing(false);
                     }
 
                     @Override
                     public void OnError(Throwable exception) {
+                        tableContainer.setVisibility(View.GONE);
                         errorTextGroup.setVisibility(View.VISIBLE);
-                        ExceptionHandling.HandleUIDataEntryValidation(getActivity(), new Exception(R.string.message_error_get_delivery_note_history + " " + exception.getMessage()),
+                        ExceptionHandling.HandleUIDataEntryValidation(getActivity(), new Exception(getString(R.string.message_error_get_delivery_note_history) + " " + exception.getMessage()),
                                 textinput_error);
                         simpleProgressBar.setVisibility(View.GONE);
                         swipeContainer.setRefreshing(false);
