@@ -76,9 +76,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.action_logout) {
-            showPopup(this);
-        }
+//        if (id == R.id.action_logout) {
+//            showPopup(this);
+//        }
         return super.onOptionsItemSelected(item);
     }
 
