@@ -85,11 +85,7 @@ public class MainActivity extends AppCompatActivity {
     private void showPopup(MainActivity mainActivity) {
         AlertDialog.Builder alert = new AlertDialog.Builder(MainActivity.this);
         alert.setMessage("Are you sure?")
-                .setPositiveButton("Logout", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        LandingActivity.Logout(mainActivity);
-                    }
-                }).setNegativeButton("Cancel", null);
+                .setPositiveButton("Logout", (dialog, which) -> LandingActivity.Logout(mainActivity)).setNegativeButton("Cancel", null);
         AlertDialog alert1 = alert.create();
         alert1.show();
     }
